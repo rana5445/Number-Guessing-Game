@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: rgb(3, 92, 92);
+    }
+    #game-container {
+      margin: 50px auto;
+      padding: 20px;
+      width: 300px;
+      border: 1px solid #6918c7;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="game-container">
+  <h1>Number Guessing Game</h1>
+  <p>Guess a number between 1 and 100:</p>
+  <input type="number" id="userGuess" min="1" max="100">
+  <button onclick="checkGuess()">Submit Guess</button>
+  <p id="message"></p>
+</div>
+
+<script>
+  // Generate a random number between 1 and 100
+  const secretNumber = Math.floor(Math.random() * 100) + 1;
+  let attempts = 0;
+
+  function checkGuess() {
+    const userGuess = document.getElementById('userGuess').value;
+    const messageElement = document.getElementById('message');
+
+    if (userGuess === '') {
+      messageElement.textContent = 'Please enter a number.';
+      return;
+    }
+
+    const guess = parseInt(userGuess);
+
+    if (isNaN(guess) || guess < 1 || guess > 100) {
+      messageElement.textContent = 'Please enter a valid number between 1 and 100.';
+      return;
+    }
+
+    attempts++;
+
+    if (guess === secretNumber) {
+      messageElement.textContent = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+      messageElement.style.color = 'green';
+      document.getElementById('userGuess').setAttribute('disabled', 'true');
+    } else {
+      const hint = guess < secretNumber ? 'Too low! Try again.' : 'Too high! Try again.';
+      messageElement.textContent = `${hint} Attempts: ${attempts}`;
+      messageElement.style.color = 'red';
+    }
+  }
+</script>
+
+</body>
+</html>
